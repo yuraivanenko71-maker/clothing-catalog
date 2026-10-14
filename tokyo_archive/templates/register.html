@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center py-4">
+    <div class="col-md-5">
+        <div class="card-custom p-4">
+            <h3 class="fw-bold text-white mb-3">Регистрация</h3>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    <label class="form-label text-muted small">{{ form.username.label.text }}</label>
+                    {{ form.username(class="form-control form-control-custom") }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-muted small">{{ form.email.label.text }}</label>
+                    {{ form.email(class="form-control form-control-custom") }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-muted small">{{ form.password.label.text }}</label>
+                    {{ form.password(class="form-control form-control-custom") }}
+                </div>
+                <div class="mb-4">
+                    <label class="form-label text-muted small">{{ form.confirm_password.label.text }}</label>
+                    {{ form.confirm_password(class="form-control form-control-custom") }}
+                </div>
+                {{ form.submit(class="btn btn-brand w-100 py-2") }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

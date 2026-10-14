@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>TOKYO ARCHIVE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0f1115; color: #e2e8f0; min-height: 100vh; display: flex; flex-direction: column; }
+        .navbar { background-color: #161920 !important; border-bottom: 1px solid #232730; }
+        .card-custom { background-color: #161920; border: 1px solid #232730; border-radius: 12px; transition: 0.2s; }
+        .card-custom:hover { border-color: #3b82f6; transform: translateY(-3px); }
+        .form-control-custom { background-color: #1a1e26; border: 1px solid #2d333f; color: #fff; border-radius: 8px; }
+        .btn-brand { background-color: #3b82f6; color: #fff; font-weight: 600; border: none; border-radius: 8px; }
+        .btn-brand:hover { background-color: #2563eb; color: #fff; }
+        footer { margin-top: auto; background-color: #161920; border-top: 1px solid #232730; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-white" href="{{ url_for('index') }}">⚡ TOKYO ARCHIVE</a>
+            <form action="{{ url_for('index') }}" method="GET" class="d-flex mx-auto w-50">
+                <input class="form-control form-control-custom form-control-sm me-2" type="search" name="q" value="{{ search_query if search_query else '' }}" placeholder="Найти вещь...">
+                <button class="btn btn-outline-light btn-sm" type="submit">Поиск</button>
+            </form>
+            <div class="navbar-nav ms-auto align-items-center gap-3">
+                <a class="nav-link text-light" href="{{ url_for('index') }}">Каталог</a>
+                {% if current_user.is_authenticated %}
+                    <a class="nav-link text-light" href="{{ url_for('cart') }}">Корзина</a>
+                    <span class="text-muted small">{{ current_user.username }}</span>
+                    <a class="btn btn-outline-danger btn-sm" href="{{ url_for('logout') }}">Выйти</a>
+                {% else %}
+                    <a class="nav-link text-light" href="{{ url_for('login') }}">Войти</a>
+                    <a class="btn btn-brand btn-sm px-3" href="{{ url_for('register') }}">Регистрация</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="container my-5">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}{% for cat, msg in messages %}
+                <div class="alert alert-{{ 'primary' if cat=='success' else 'danger' }} bg-opacity-20 text-white border-0">{{ msg }}</div>
+            {% endfor %}{% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+    <footer class="py-4 text-center text-muted small">TOKYO ARCHIVE // Portfolio Project</footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
